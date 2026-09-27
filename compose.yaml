@@ -10,6 +10,7 @@ services:
       ALGORITHM: HS256
     volumes:
       - ./app/classification_models:/app/app/classification_models:ro
+      - ./app/segmentation_models:/app/app/segmentation_models:ro
     depends_on:
       mongo:
         condition: service_healthy
