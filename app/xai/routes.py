@@ -1,4 +1,5 @@
 from fastapi import APIRouter, UploadFile, File, Depends, Form
+from app.classification_models.model_loader import require_model
 from fastapi.responses import JSONResponse
 from gridfs import GridFS
 from app.auth.dependencies import get_current_user_optional
@@ -27,7 +28,7 @@ from dataclasses import asdict
 xai_router = APIRouter()
 
 
-@xai_router.post("/gradcam", response_model=XAIResponse)
+@xai_router.post("/gradcam", response_model=XAIResponse, dependencies=[Depends(require_model)])
 async def gradcam_explanation(
     file: UploadFile = File(...),
     history_id: Optional[str] = Form(None),
@@ -54,7 +55,7 @@ async def gradcam_explanation(
     )
 
 
-@xai_router.post("/lime", response_model=XAIResponse)
+@xai_router.post("/lime", response_model=XAIResponse, dependencies=[Depends(require_model)])
 async def lime_explanation(
     file: UploadFile = File(...),
     history_id: Optional[str] = Form(None),
@@ -85,7 +86,7 @@ async def lime_explanation(
     )
     
 
-@xai_router.post("/anchor", response_model=XAIResponse)
+@xai_router.post("/anchor", response_model=XAIResponse, dependencies=[Depends(require_model)])
 async def anchor_explanation(
     file: UploadFile = File(...),
     history_id: Optional[str] = Form(None),
@@ -116,7 +117,7 @@ async def anchor_explanation(
     )
 
      
-@xai_router.post("/shap", response_model=XAIResponse)
+@xai_router.post("/shap", response_model=XAIResponse, dependencies=[Depends(require_model)])
 async def shap_explanation(
     file: UploadFile = File(...),
     history_id: Optional[str] = Form(None),
@@ -147,7 +148,7 @@ async def shap_explanation(
     )
     
 
-@xai_router.post("/ig", response_model=XAIResponse)
+@xai_router.post("/ig", response_model=XAIResponse, dependencies=[Depends(require_model)])
 async def integrated_gradients_explanation(
     file: UploadFile = File(...),
     history_id: Optional[str] = Form(None),

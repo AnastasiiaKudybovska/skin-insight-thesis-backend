@@ -18,6 +18,8 @@ async def classify_image(
     db: Database,
     user: Optional[dict] = None
 ) -> ClassificationWithHistoryResponse:
+    if model is None:
+        raise HTTPException(status_code=503, detail="ResNet model is not installed")
     file_data = await file.read() 
     image_np = load_and_preprocess_image(file_data)
     image_np = np.expand_dims(image_np, axis=0)
