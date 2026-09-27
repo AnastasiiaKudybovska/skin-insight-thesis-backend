@@ -1,0 +1,10 @@
+.git
+.gitignore
+venv
+venv310
+__pycache__
+*.py[cod]
+.env
+**/.env
+*.log
+**/*.h5
